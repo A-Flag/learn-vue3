@@ -7,6 +7,35 @@
     <title>Document</title>
 </head>
 <body>
-    <script src="../dist/reactivity.global.js"></script>
+    <!-- <script src="../../../node_modules/@vue/reactivity/dist/reactivity.global.js"></script> -->
+   
+    <script src="./reactivity.global.js"></script>
+    <div id="app"></div>
+  
+    <script>
+        //effect代表的是副作用，如果此函数依赖的数据发生变化，会重新执行
+        //reactive将数据变成响应式 proxy
+
+        console.log('VueReactivity',VueReactivity)
+        const {effect,reactive} = VueReactivity;
+
+        const state = reactive({name:'zf',age:11,address:{num:123}})
+        const data1 = reactive(state)
+        const data2 = reactive(state)
+        console.log('two',data1==data2)
+
+        const data3 =  reactive(data2)
+        console.log('three',data3==data2)
+        // const state1 = readonly({name:'zf',age:11,address:{num:123}})
+        // console.log('state',state)
+        effect(()=>{//默认会先执行一次，对响应数据取值
+            app.innerHTML=state.name+'今年'+state.age+'岁了'
+        })
+        // //稍后name喝age变化会重新执行effect函数
+        // setTimeout(()=>{
+        //     state.age = 14
+        // },1000)
+
+    </script>
 </body>
 </html>
